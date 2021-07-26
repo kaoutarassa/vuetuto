@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>{{ message }}</h1>
+            <h2>Menu: </h2>
+            <p v-for= "item in simpleMenu" :v-if= "inStock">
+                <img :src="item.image.source" :alt= "item.image.alt"/>
+            </br>
+                <b>Nom: {{ item.name }} </b>
+            </br>
+                quantité: {{ item.quantity }}
+
+                
+            <button @click= "addToShoppingCart">Ajouter ce produit dans le panier</button>
+            </p>
+            <p :v-else-if= "inStock = false" >Produits non existant dans le stock</p>
+            <h1 v-model= "cartTotal"> {{ cartTotal }}</h1>
+        </header>
+        <footer>{{ copyright }}</footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+                message: "Bonjour 👋 ",
+                restaurantName: "Paradise",
+                Numero_de_téléphone: "0687457899",
+                Email: "paradise@gmail.com",
+                Adresse_postale: 8000,
+                simpleMenu: [
+						{
+							name: "Croissant",
+							image: {
+								source: "./image/croissant.jpg",
+								alt: "Un croissant"
+							},
+							inStock: true,
+							quantity: 1
+						},
+						{
+							name: "Baguette de pain",
+							image: {
+								source: "./image/french-baguette.jpeg",
+								alt: "Quatre baguettes de pain"
+							},
+							inStock: true,
+							quantity: 1
+						},
+						{
+							name: "Éclair",
+							image: {
+								source: "./image/eclair.jpg",
+								alt: "Éclair au chocolat"
+							},
+							inStock: false,
+							quantity: 0
+						}
+                    ],
+                cartTotal : 0
+            },
+
+            computed: {
+                copyright(){
+                    const currentYear = new Date().getFullYear()
+                    return "@copyright "+ this.restaurantName + " " + currentYear
+                }
+            },
+            methods: {
+                addToShoppingCart(){
+                        this.cartTotal += 1                    
+                }
+            }
+        });
+    </script>
+</body>
+</html>
